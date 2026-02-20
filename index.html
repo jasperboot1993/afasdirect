@@ -56,18 +56,22 @@
         .modal-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; }
         .modal-btn:hover { border-color: var(--afas-orange); background: #fff9f2; }
 
-        /* AANPASSINGEN VOOR MOBIEL */
+        /* MOBIELE CORRECTIES */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; }
-            .visual-panel { padding: 20px; background-color: #fff; order: 1; }
-            .visual-card { position: relative; top: 0; box-shadow: none; border: 1px solid #eee; }
-            /* HIER WORDT DE AFBEELDING VERBORGEN OP MOBIEL */
-            .image-container { display: none; } 
+            .visual-panel { padding: 20px 20px 0 20px; background-color: #fff; order: 1; }
+            .visual-card { position: relative; top: 0; box-shadow: none; border: 1px solid #eee; border-radius: 12px; }
+            
+            /* AFBEELDING VOLLEDIG VERBERGEN OP MOBIEL */
+            .image-container { display: none !important; } 
+            
+            .price-overlay { padding: 20px; text-align: center; }
+            .big-price { font-size: 32px; }
             .controls-panel { width: 100%; max-width: 100%; border-left: none; padding: 10px 20px 140px 20px; order: 2; }
             .option-grid { grid-template-columns: 1fr; }
-            .footer-cta { justify-content: center; padding: 15px 20px; }
+            .footer-cta { justify-content: center; padding: 15px 20px; left: 0; }
             .cta-btn { width: 100%; }
-            h1 { font-size: 20px; margin-bottom: 15px; }
+            h1 { font-size: 20px; margin-bottom: 15px; text-align: center; }
         }
     </style>
 </head>
@@ -83,7 +87,7 @@
         <div class="visual-card">
             <div id="dynamic-overlay" style="display:none; padding:40px; text-align:center;"></div>
             <div class="image-container">
-                <img id="dynamic-img" src="" class="feature-img">
+                <img id="dynamic-img" src="zakelijk.jpg" class="feature-img">
             </div>
             <div class="price-overlay" id="price-box">
                 <span class="price-label">Investering per maand</span>
@@ -150,9 +154,10 @@
 
 <script>
     let currentSector = 'zakelijk';
+    // Gebruik hier de simpele namen voor GitHub
     const imgMap = { 
         zakelijk: "zakelijk.jpg", 
-        handel: "BANNER (6).png" 
+        handel: "banner.png" 
     };
     
     const featuresMap = {
@@ -235,17 +240,12 @@
             details = `${wms}, ${shop}, ${scan}`;
         }
 
-        const samenvatting = `CONFIGURATOR DATA: Branche: ${brancheNaam} | FTE: ${fte} | Prijs: ${price} | Opties: ${details}`;
-        
+        const samenvatting = `CONFIGURATOR: Branche: ${brancheNaam} | FTE: ${fte} | Prijs: ${price} | Opties: ${details}`;
         const url = (route === 'demo') ? 'https://calendly.com/afasrsp/90min' : 'https://calendly.com/mear/15min';
         
         Calendly.initPopupWidget({ 
             url: url,
-            prefill: {
-                customAnswers: {
-                    a2: samenvatting
-                }
-            }
+            prefill: { customAnswers: { a2: samenvatting } }
         });
         closeChoiceModal();
     }
