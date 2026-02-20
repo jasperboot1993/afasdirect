@@ -18,7 +18,7 @@
 
         .main-wrapper { display: flex; flex: 1; flex-direction: row; }
         
-        /* Visueel Paneel */
+        /* Visueel Paneel Desktop */
         .visual-panel { flex: 1; background-color: var(--bg-light); padding: 40px 20px; display: flex; justify-content: center; align-items: flex-start; }
         .visual-card { width: 100%; max-width: 550px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; position: sticky; top: 110px; }
         .image-container { height: 280px; width: 100%; background: #eee; }
@@ -32,7 +32,6 @@
         h1 { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 24px; color: var(--afas-blue); margin-bottom: 30px; }
         .section-title { font-weight: 900; font-size: 12px; text-transform: uppercase; color: var(--afas-blue); margin: 25px 0 15px 0; display: block; }
 
-        /* UI Elementen */
         .option-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
         .btn-option { padding: 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 700; transition: 0.2s; font-size: 14px; }
         .btn-option.selected { border-color: var(--afas-blue); background: #f0f7ff; box-shadow: 0 0 0 1px var(--afas-blue); color: var(--afas-blue); }
@@ -41,7 +40,6 @@
         .fte-bubble { background: var(--afas-blue); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 900; }
         .custom-select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
 
-        /* Switches voor Handel */
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
         .switch { position: relative; width: 50px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -50,7 +48,6 @@
         input:checked + .slider { background-color: var(--afas-blue); }
         input:checked + .slider:before { transform: translateX(24px); }
 
-        /* Footer & Modal */
         .footer-cta { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; padding: 15px 40px; z-index: 1000; display: flex; justify-content: flex-end; }
         .cta-btn { font-family: 'Roboto', sans-serif; font-weight: 900; background: var(--afas-orange); color: #fff; border: none; padding: 16px 40px; font-size: 16px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         
@@ -59,15 +56,18 @@
         .modal-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; }
         .modal-btn:hover { border-color: var(--afas-orange); background: #fff9f2; }
 
-        /* Mobiele Aanpassingen */
+        /* AANPASSINGEN VOOR MOBIEL */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; }
-            .visual-panel { padding: 10px; background-color: #fff; order: 1; }
+            .visual-panel { padding: 20px; background-color: #fff; order: 1; }
             .visual-card { position: relative; top: 0; box-shadow: none; border: 1px solid #eee; }
-            .controls-panel { width: 100%; max-width: 100%; border-left: none; padding-top: 20px; order: 2; }
+            /* HIER WORDT DE AFBEELDING VERBORGEN OP MOBIEL */
+            .image-container { display: none; } 
+            .controls-panel { width: 100%; max-width: 100%; border-left: none; padding: 10px 20px 140px 20px; order: 2; }
             .option-grid { grid-template-columns: 1fr; }
             .footer-cta { justify-content: center; padding: 15px 20px; }
             .cta-btn { width: 100%; }
+            h1 { font-size: 20px; margin-bottom: 15px; }
         }
     </style>
 </head>
@@ -94,7 +94,7 @@
     </section>
 
     <main class="controls-panel">
-        <h1>Stel jouw AFAS samen</h1>
+        <h1>AFAS Direct Configurator</h1>
         
         <span class="section-title">1. Kies jouw branche</span>
         <div class="option-grid">
@@ -151,9 +151,10 @@
 <script>
     let currentSector = 'zakelijk';
     const imgMap = { 
-        zakelijk: "FAVORI - Key visuals Jonas 35 (1).jpg", 
+        zakelijk: "zakelijk.jpg", 
         handel: "BANNER (6).png" 
     };
+    
     const featuresMap = {
         zakelijk: ['✓ Projectmanagement', '✓ CRM & Boekhouding', '✓ Urenregistratie'],
         handel: ['✓ Voorraadbeheer', '✓ In- & Verkoop', '✓ CRM & Boekhouding']
