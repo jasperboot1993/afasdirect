@@ -11,179 +11,244 @@
     <style>
         :root { --afas-blue: #0060a9; --afas-orange: #F59F39; --text-color: #41474d; --bg-light: #f3f6f8; --border-color: #e0e0e0; --success-green: #3CC658; }
         * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; color: var(--text-color); height: 100vh; overflow: hidden; display: flex; flex-direction: column; background-color: #fff; }
-        header { height: 80px; background: #fff; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100; }
-        .logo-img { height: 45px; width: auto; }
-        .container { display: flex; flex: 1; overflow: hidden; }
-        .visual-panel { flex: 60%; background-color: var(--bg-light); padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .visual-card { width: 100%; max-width: 650px; background: #fff; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); overflow: hidden; position: relative; }
-        .image-container { height: 350px; width: 100%; background: #eee; }
+        body { margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; color: var(--text-color); background-color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { height: 70px; background: #fff; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; position: sticky; top: 0; z-index: 1000; }
+        .logo-img { height: 35px; width: auto; }
+
+        .main-wrapper { display: flex; flex: 1; flex-direction: row; }
+        
+        /* Visueel Paneel */
+        .visual-panel { flex: 1; background-color: var(--bg-light); padding: 40px 20px; display: flex; justify-content: center; align-items: flex-start; }
+        .visual-card { width: 100%; max-width: 550px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; position: sticky; top: 110px; }
+        .image-container { height: 280px; width: 100%; background: #eee; }
         .feature-img { width: 100%; height: 100%; object-fit: cover; }
-        .price-overlay { padding: 35px; background: #fff; }
-        .price-label { font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 16px; color: #666; margin-bottom: 5px; display: block; }
-        .big-price { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 52px; color: #000; letter-spacing: -1px; }
-        .controls-panel { flex: 40%; background: #fff; border-left: 1px solid var(--border-color); overflow-y: auto; min-width: 450px; }
-        .scroll-content { padding: 40px 40px 160px 40px; }
-        h1 { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 28px; color: var(--afas-blue); margin: 0 0 10px 0; }
-        .section-title { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 12px; text-transform: uppercase; color: var(--afas-blue); margin-top: 30px; margin-bottom: 15px; display: block; }
-        .option-grid { display: grid; gap: 10px; }
-        .btn-option { padding: 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; transition: 0.2s; text-align: left; }
-        .btn-option.sector-btn.selected { border-color: var(--afas-blue); background: #f0f7ff; box-shadow: 0 0 0 1px var(--afas-blue); }
-        .slider-box { background: #f9f9f9; padding: 25px; border-radius: 8px; border: 1px solid #eee; text-align: center; }
-        input[type=range] { width: 100%; accent-color: var(--afas-blue); cursor: pointer; margin: 15px 0; }
-        .fte-bubble { background: var(--afas-blue); color: white; padding: 6px 16px; border-radius: 20px; font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 18px; }
-        .custom-select { font-family: 'Open Sans', sans-serif; width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 10px; }
-        .usp-item { font-size: 14px; line-height: 1.8; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-        .list-item { font-size: 14px; display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
-        .switch-label-text { color: #999; font-size: 14px; transition: 0.2s; }
-        .switch-label-text.active { color: var(--afas-blue); font-weight: bold; }
-        .switch-group { display: flex; align-items: center; gap: 12px; }
-        .switch { position: relative; display: inline-block; width: 52px; height: 28px; }
+        .price-overlay { padding: 30px; }
+        .price-label { font-size: 14px; color: #666; margin-bottom: 5px; display: block; }
+        .big-price { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 42px; color: #000; }
+
+        /* Controls Paneel */
+        .controls-panel { flex: 1; padding: 40px 20px 140px 20px; max-width: 600px; border-left: 1px solid var(--border-color); }
+        h1 { font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 24px; color: var(--afas-blue); margin-bottom: 30px; }
+        .section-title { font-weight: 900; font-size: 12px; text-transform: uppercase; color: var(--afas-blue); margin: 25px 0 15px 0; display: block; }
+
+        /* UI Elementen */
+        .option-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+        .btn-option { padding: 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 700; transition: 0.2s; font-size: 14px; }
+        .btn-option.selected { border-color: var(--afas-blue); background: #f0f7ff; box-shadow: 0 0 0 1px var(--afas-blue); color: var(--afas-blue); }
+        .slider-box { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; text-align: center; }
+        input[type=range] { width: 100%; accent-color: var(--afas-blue); cursor: pointer; }
+        .fte-bubble { background: var(--afas-blue); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 900; }
+        .custom-select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
+
+        /* Switches voor Handel */
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+        .switch { position: relative; width: 50px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--afas-blue); }
         input:checked + .slider:before { transform: translateX(24px); }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-        .modal-card { background: #fff; padding: 40px; border-radius: 16px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .modal-card h2 { font-family: 'Roboto', sans-serif; font-weight: 900; color: var(--afas-blue); margin-bottom: 20px; }
-        .modal-btn { display: block; width: 100%; padding: 20px; margin-bottom: 10px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; transition: 0.2s; }
+
+        /* Footer & Modal */
+        .footer-cta { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; padding: 15px 40px; z-index: 1000; display: flex; justify-content: flex-end; }
+        .cta-btn { font-family: 'Roboto', sans-serif; font-weight: 900; background: var(--afas-orange); color: #fff; border: none; padding: 16px 40px; font-size: 16px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-card { background: #fff; padding: 30px; border-radius: 16px; width: 100%; max-width: 450px; text-align: center; }
+        .modal-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; }
         .modal-btn:hover { border-color: var(--afas-orange); background: #fff9f2; }
-        .modal-btn b { display: block; font-size: 16px; margin-bottom: 4px; }
-        .modal-btn span { font-size: 13px; color: #666; }
-        .footer-cta { position: fixed; bottom: 0; right: 0; width: 40%; min-width: 450px; background: #fff; border-top: 1px solid #eee; padding: 20px 40px; z-index: 200; }
-        .cta-btn { font-family: 'Roboto', sans-serif; font-weight: 900; background: var(--afas-orange); color: #fff; border: none; padding: 16px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
-        .notification-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 10; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
-        @media (max-width: 900px) { .container { flex-direction: column; overflow: auto; } .controls-panel, .footer-cta { width: 100%; min-width: 0; position: relative; } }
+
+        /* Mobiele Aanpassingen */
+        @media (max-width: 900px) {
+            .main-wrapper { flex-direction: column; }
+            .visual-panel { padding: 10px; background-color: #fff; order: 1; }
+            .visual-card { position: relative; top: 0; box-shadow: none; border: 1px solid #eee; }
+            .controls-panel { width: 100%; max-width: 100%; border-left: none; padding-top: 20px; order: 2; }
+            .option-grid { grid-template-columns: 1fr; }
+            .footer-cta { justify-content: center; padding: 15px 20px; }
+            .cta-btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
+
 <header>
-    <img src="unnamed (1).png" alt="AFAS Software" class="logo-img">
-    <div style="font-family: 'Roboto', sans-serif; font-weight: 900; font-size: 12px; color: #666;">🏆 Marktleider ERP</div>
+    <img src="unnamed (1).png" alt="AFAS Logo" class="logo-img">
+    <div style="font-size: 10px; font-weight: 900; color: #999;">🏆 Marktleider ERP</div>
 </header>
-<div class="container">
-    <div class="visual-panel">
+
+<div class="main-wrapper">
+    <section class="visual-panel">
         <div class="visual-card">
-            <div id="dynamic-overlay" class="notification-overlay"></div>
-            <div class="image-container"><img id="dynamic-img" src="" class="feature-img"></div>
+            <div id="dynamic-overlay" style="display:none; padding:40px; text-align:center;"></div>
+            <div class="image-container">
+                <img id="dynamic-img" src="" class="feature-img">
+            </div>
             <div class="price-overlay" id="price-box">
-                <span class="price-label">Maandelijkse investering</span>
-                <div><span class="big-price" id="total-price">€ 375</span><span style="font-family: 'Roboto', sans-serif; font-weight: 300; font-size: 20px; color: #888;"> / mnd</span></div>
-                <div style="margin-top:10px; font-size: 13px; color: var(--success-green); font-weight: bold;">✓ Inclusief implementatiekosten</div>
+                <span class="price-label">Investering per maand</span>
+                <span class="big-price" id="total-price">€ 375</span>
+                <div style="margin-top:10px; font-size: 12px; color: var(--success-green); font-weight: bold;">✓ Inclusief implementatiekosten</div>
             </div>
         </div>
-    </div>
-    <div class="controls-panel">
-        <div class="scroll-content">
-            <h1>AFAS Direct Configurator</h1>
-            <span class="section-title">1. Branche</span>
-            <div class="option-grid">
-                <div class="btn-option sector-btn selected" onclick="setSector('zakelijk', this)"><span class="btn-title">Zakelijke Dienstverlening</span></div>
-                <div class="btn-option sector-btn" onclick="setSector('handel', this)"><span class="btn-title">Handel & Productie</span></div>
-            </div>
-            <span class="section-title">2. Omvang organisatie</span>
-            <div class="slider-box">
-                <input type="range" min="1" max="30" value="5" id="fte-slider" oninput="updateCalc()">
-                <div style="margin-top: 10px;"><span class="fte-bubble"><span id="fte-display">5</span> FTE</span></div>
-            </div>
-            <span class="section-title">3. Jouw organisatie</span>
-            <div id="zakelijk-details">
-                <select class="custom-select" id="org-type">
-                    <option value="Architect / Ingenieur">Architect / Ingenieur</option>
-                    <option value="Adviesbureau">Adviesbureau</option>
-                    <option value="Consultancybedrijf">Consultancybedrijf</option>
-                    <option value="Opleider">Opleider</option>
-                    <option value="Stichting">Stichting</option>
-                </select>
-            </div>
-            <div id="handel-details" style="display:none;">
-                <div class="list-item"><span>WMS nodig?</span><div class="switch-group"><span class="switch-label-text" id="label-wms-nee">Nee</span><label class="switch"><input type="checkbox" id="check-wms" checked onchange="updateLabels()"><span class="slider"></span></label><span class="switch-label-text active" id="label-wms-ja">Ja</span></div></div>
-                <div class="list-item"><span>Webshop koppeling?</span><div class="switch-group"><span class="switch-label-text active" id="label-shop-nee">Nee</span><label class="switch"><input type="checkbox" id="check-webshop" onchange="updateLabels()"><span class="slider"></span></label><span class="switch-label-text" id="label-shop-ja">Ja</span></div></div>
-                <div class="list-item"><span>Scanoplossing?</span><div class="switch-group"><span class="switch-label-text" id="label-scan-nee">Nee</span><label class="switch"><input type="checkbox" id="check-scan" checked onchange="updateLabels()"><span class="slider"></span></label><span class="switch-label-text active" id="label-scan-ja">Ja</span></div></div>
-            </div>
-            <span class="section-title">4. Meest populaire functies</span>
-            <div id="popular-features-container"></div>
-            <span class="section-title">5. Belangrijke voordelen</span>
-            <div style="font-size:14px; line-height:2;">
-                <div><span style="color:var(--success-green); font-weight:bold;">✓</span> De implementatie is volledig kosteloos</div>
-                <div><span style="color:var(--success-green); font-weight:bold;">✓</span> Snel van start, zelf aan de slag</div>
-                <div><span style="color:var(--success-green); font-weight:bold;">✓</span> Jij groeit, onze software groeit mee</div>
-            </div>
+    </section>
+
+    <main class="controls-panel">
+        <h1>Stel jouw AFAS samen</h1>
+        
+        <span class="section-title">1. Kies jouw branche</span>
+        <div class="option-grid">
+            <div class="btn-option sector-btn selected" onclick="setSector('zakelijk', this)">Zakelijke Dienstverlening</div>
+            <div class="btn-option sector-btn" onclick="setSector('handel', this)">Handel & Productie</div>
         </div>
-    </div>
-    <div class="footer-cta"><button id="main-cta" class="cta-btn" onclick="handleFooterAction()">Afspraak Inplannen</button></div>
+
+        <span class="section-title">2. Aantal medewerkers</span>
+        <div class="slider-box">
+            <input type="range" min="1" max="30" value="5" id="fte-slider" oninput="updateCalc()">
+            <div style="margin-top: 15px;"><span class="fte-bubble"><span id="fte-display">5</span> FTE</span></div>
+        </div>
+
+        <span class="section-title">3. Jouw organisatie</span>
+        <div id="zakelijk-details">
+            <select class="custom-select" id="org-type" onchange="updateCalc()">
+                <option>Architect / Ingenieur</option>
+                <option>Adviesbureau</option>
+                <option>Consultancy</option>
+                <option>Opleider</option>
+                <option>Stichting</option>
+            </select>
+        </div>
+
+        <div id="handel-details" style="display:none;">
+            <div class="list-item"><span>WMS nodig?</span><label class="switch"><input type="checkbox" id="check-wms" checked onchange="updateCalc()"><span class="slider"></span></label></div>
+            <div class="list-item"><span>Webshop koppeling?</span><label class="switch"><input type="checkbox" id="check-webshop" onchange="updateCalc()"><span class="slider"></span></label></div>
+            <div class="list-item"><span>Scanoplossing?</span><label class="switch"><input type="checkbox" id="check-scan" checked onchange="updateCalc()"><span class="slider"></span></label></div>
+        </div>
+
+        <span class="section-title">4. Inbegrepen functies</span>
+        <div id="popular-features-container" style="font-size: 14px; line-height: 2;"></div>
+    </main>
 </div>
-<div id="choice-modal" class="modal-overlay" onclick="closeChoiceModal(event)">
+
+<div class="footer-cta">
+    <button id="main-cta" class="cta-btn" onclick="openChoiceModal()">Afspraak inplannen</button>
+</div>
+
+<div id="choice-modal" class="modal-overlay" onclick="closeChoiceModal()">
     <div class="modal-card" onclick="event.stopPropagation()">
-        <h2>Hoe wil je verder?</h2>
-        <div class="modal-btn" onclick="startCalendly('demo')"><b>Ik wil direct een demo</b><span>Plan een afspraak in de agenda van Roy</span></div>
-        <div class="modal-btn" onclick="startCalendly('sales')"><b>Ik heb nog wat vragen</b><span>Plan een call met Melina (InSide Sales)</span></div>
+        <h2 style="font-family: 'Roboto'; font-weight: 900; color: var(--afas-blue);">Hoe wil je verder?</h2>
+        <div class="modal-btn" onclick="startCalendly('demo')">
+            <strong>Ik wil direct een demo</strong><br>
+            <small>Plan 90 min met Roy</small>
+        </div>
+        <div class="modal-btn" onclick="startCalendly('sales')">
+            <strong>Ik heb nog wat vragen</strong><br>
+            <small>Plan 15 min met Melina</small>
+        </div>
     </div>
 </div>
+
 <script>
     let currentSector = 'zakelijk';
-    // HIER WORDEN DE BESTANDSNAAM-EXTENSIES GECORRIGEERD OP BASIS VAN JOUW MAP
-    const imgMap = {
-        zakelijk: "FAVORI - Key visuals Jonas 35 (1).jpg",
-        handel: "BANNER (6).png" // Gewijzigd naar .png conform screenshot
+    const imgMap = { 
+        zakelijk: "FAVORI - Key visuals Jonas 35 (1).jpg", 
+        handel: "BANNER (6).png" 
     };
     const featuresMap = {
-        zakelijk: ['Projectmanagement', 'Boekhouding', 'CRM', 'Urenregistratie'],
-        handel: ['Ordermanagement', 'Voorraadbeheer', 'Boekhouding', 'CRM', 'In- & Verkoop']
+        zakelijk: ['✓ Projectmanagement', '✓ CRM & Boekhouding', '✓ Urenregistratie'],
+        handel: ['✓ Voorraadbeheer', '✓ In- & Verkoop', '✓ CRM & Boekhouding']
     };
-    function updateLabels() {
-        const checks = [{id: 'check-wms', nee: 'label-wms-nee', ja: 'label-wms-ja'},{id: 'check-webshop', nee: 'label-shop-nee', ja: 'label-shop-ja'},{id: 'check-scan', nee: 'label-scan-nee', ja: 'label-scan-ja'}];
-        checks.forEach(c => { const el = document.getElementById(c.id); if (!el) return; const isChecked = el.checked; document.getElementById(c.nee).className = isChecked ? 'switch-label-text' : 'switch-label-text active'; document.getElementById(c.ja).className = isChecked ? 'switch-label-text active' : 'switch-label-text'; });
-    }
-    window.addEventListener('message', function(e) { if (e.data.event && e.data.event.indexOf('calendly.event_scheduled') !== -1) { confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#0060a9', '#F59F39', '#3CC658'] }); } });
+
     function setSector(sector, btn) {
         document.querySelectorAll('.sector-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected'); currentSector = sector;
+        btn.classList.add('selected');
+        currentSector = sector;
         document.getElementById('zakelijk-details').style.display = (sector === 'zakelijk') ? 'block' : 'none';
         document.getElementById('handel-details').style.display = (sector === 'handel') ? 'block' : 'none';
         document.getElementById('dynamic-img').src = imgMap[sector];
-        renderFeatures(); updateCalc(); if(sector === 'handel') updateLabels();
+        
+        const featCont = document.getElementById('popular-features-container');
+        featCont.innerHTML = featuresMap[sector].join('<br>');
+        updateCalc();
     }
-    function renderFeatures() {
-        const container = document.getElementById('popular-features-container'); container.innerHTML = '';
-        featuresMap[currentSector].forEach(feature => { const div = document.createElement('div'); div.className = 'usp-item'; div.innerHTML = `<span style="color:var(--success-green); font-weight:bold;">✓</span> <span>${feature}</span>`; container.appendChild(div); });
-    }
+
     function updateCalc() {
         const fte = parseInt(document.getElementById('fte-slider').value);
         document.getElementById('fte-display').innerText = fte;
-        const overlay = document.getElementById('dynamic-overlay'); const priceBox = document.getElementById('price-box'); const cta = document.getElementById('main-cta');
-        overlay.style.display = 'none'; priceBox.style.opacity = '1'; cta.innerText = "Afspraak Inplannen";
+        const overlay = document.getElementById('dynamic-overlay');
+        const priceBox = document.getElementById('price-box');
+        const cta = document.getElementById('main-cta');
+        
+        overlay.style.display = 'none';
+        priceBox.style.opacity = '1';
+        cta.innerText = "Afspraak inplannen";
         let price = 0;
-        if (fte === 1) { overlay.style.display = 'flex'; priceBox.style.opacity = '0'; overlay.innerHTML = `<h2 style="font-family:'Roboto',sans-serif;font-weight:900;">AFAS SB</h2><p>Ideaal voor ondernemers en kleine organisaties.</p>`; cta.innerText = "Bestel AFAS SB"; return; }
-        if (fte >= 26) { overlay.style.display = 'flex'; priceBox.style.opacity = '0'; overlay.innerHTML = `<h2 style="font-family:'Roboto',sans-serif;font-weight:900;">📐 Maatwerk</h2><p>Voor 26+ medewerkers bieden we een oplossing op maat.</p>`; } else {
-            if (fte >= 2 && fte <= 5) price = 375;
-            else if (fte >= 6 && fte <= 8) price = 450;
-            else if (fte >= 9 && fte <= 10) price = 550; 
-            else if (fte >= 11 && fte <= 14) price = 650;
-            else if (fte == 15) price = 784;
-            else if (fte >= 16 && fte <= 20) price = 1012;
-            else if (fte >= 21 && fte <= 25) price = 1237.5;
-            document.getElementById('total-price').innerText = "€ " + price.toLocaleString('nl-NL');
+
+        if (fte === 1) {
+            overlay.style.display = 'block';
+            priceBox.style.opacity = '0';
+            overlay.innerHTML = "<h3>AFAS SB</h3><p>Perfect voor ZZP/Kleine bedrijven.</p>";
+            cta.innerText = "Bekijk AFAS SB";
+            return;
+        }
+        if (fte >= 26) {
+            overlay.style.display = 'block';
+            priceBox.style.opacity = '0';
+            overlay.innerHTML = "<h3>📐 Maatwerk</h3><p>Voor organisaties vanaf 26 FTE.</p>";
+            return;
+        }
+
+        if (fte <= 5) price = 375;
+        else if (fte <= 8) price = 450;
+        else if (fte <= 10) price = 550;
+        else if (fte <= 14) price = 650;
+        else if (fte === 15) price = 784;
+        else if (fte <= 20) price = 1012;
+        else if (fte <= 25) price = 1237.5;
+
+        document.getElementById('total-price').innerText = "€ " + price.toLocaleString('nl-NL');
+    }
+
+    function openChoiceModal() { 
+        if(parseInt(document.getElementById('fte-slider').value) === 1) {
+            window.open('https://www.afas-sb.nl/bestellen', '_blank');
+        } else {
+            document.getElementById('choice-modal').style.display = 'flex'; 
         }
     }
-    function handleFooterAction() { const fte = parseInt(document.getElementById('fte-slider').value); if (fte === 1) { window.open('https://www.afas-sb.nl/bestellen', '_blank'); } else { openChoiceModal(); } }
-    function openChoiceModal() { document.getElementById('choice-modal').style.display = 'flex'; }
-    function closeChoiceModal(e) { document.getElementById('choice-modal').style.display = 'none'; }
+
+    function closeChoiceModal() { document.getElementById('choice-modal').style.display = 'none'; }
+
     function startCalendly(route) {
-        document.getElementById('choice-modal').style.display = 'none';
-        const fte = document.getElementById('fte-slider').value; const total = document.getElementById('total-price').innerText; const brancheNaam = currentSector === 'zakelijk' ? "Zakelijke Dienstverlening" : "Handel & Productie";
-        const url = (route === 'demo') ? 'https://calendly.com/afasrsp/90min' : 'https://calendly.com/mear/15min';
+        const fte = document.getElementById('fte-slider').value;
+        const price = document.getElementById('total-price').innerText;
+        const brancheNaam = currentSector === 'zakelijk' ? "Zakelijke Dienstverlening" : "Handel & Productie";
+        
         let details = "";
-        if (currentSector === 'zakelijk') { details = `Type: ${document.getElementById('org-type').value}`; } else {
+        if (currentSector === 'zakelijk') {
+            details = `Type: ${document.getElementById('org-type').value}`;
+        } else {
             const wms = document.getElementById('check-wms').checked ? "WMS: Ja" : "WMS: Nee";
             const shop = document.getElementById('check-webshop').checked ? "Shop: Ja" : "Shop: Nee";
             const scan = document.getElementById('check-scan').checked ? "Scan: Ja" : "Scan: Nee";
-            details = `${wms} | ${shop} | ${scan}`;
+            details = `${wms}, ${shop}, ${scan}`;
         }
-        const samenvatting = `Branche: ${brancheNaam} | Omvang: ${fte} FTE | Investering: ${total} | Details: ${details} | Route: ${route === 'demo' ? 'Directe Demo' : 'Inside Sales'}`;
-        Calendly.initPopupWidget({ url: url, prefill: { customAnswers: { a1: "", a2: samenvatting } } });
+
+        const samenvatting = `CONFIGURATOR DATA: Branche: ${brancheNaam} | FTE: ${fte} | Prijs: ${price} | Opties: ${details}`;
+        
+        const url = (route === 'demo') ? 'https://calendly.com/afasrsp/90min' : 'https://calendly.com/mear/15min';
+        
+        Calendly.initPopupWidget({ 
+            url: url,
+            prefill: {
+                customAnswers: {
+                    a2: samenvatting
+                }
+            }
+        });
+        closeChoiceModal();
     }
+
     setSector('zakelijk', document.querySelector('.sector-btn'));
 </script>
 </body>
